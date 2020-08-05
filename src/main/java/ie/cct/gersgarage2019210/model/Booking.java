@@ -1,6 +1,6 @@
 package ie.cct.gersgarage2019210.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -34,8 +34,6 @@ public class Booking {
 	@ManyToOne
 	@JoinColumn(name = "vehicle")
 	private Vehicle vehicle;
-	private LocalDateTime entryDate;
-	private LocalDateTime collectionDate;
 	@ManyToOne
 	@JoinColumn(name = "type")
 	private BookingType requiredBooking;
@@ -49,15 +47,18 @@ public class Booking {
 	  inverseJoinColumns = {@JoinColumn(name = "service_id")}
 	)
 	List<ServiceType> requiredServices;
-	@ManyToMany
-	@JoinTable(
-	  name = "booking_items", 
-	  joinColumns = {@JoinColumn(name = "booking_id")}, 
-	  inverseJoinColumns = {@JoinColumn(name = "item_id")}
-	)
-	List<Item> requiredItems;
+	private LocalDate bookingDate;
+	private Integer requiredSlots;
+	private String comments;
 	
-	
-
-
+	public Integer[] getServiceIds() {
+		if(requiredServices.isEmpty()) {
+			return null;
+		}
+		Integer[] ids = new Integer[requiredServices.size()];
+		for (int i = 0; i < requiredServices.size();i++){
+			ids[i] = requiredServices.get(i).getId();
+		}
+		return ids;
+	}
 }
