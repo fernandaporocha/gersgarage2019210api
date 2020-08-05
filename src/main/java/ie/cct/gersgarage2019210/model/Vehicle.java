@@ -32,5 +32,8 @@ public class Vehicle {
 	private VehicleEngine engine;
 	private String licence;
 	private Year year;
+	@ManyToOne
+	@JoinColumn(name = "customer")
+	private User customer;
 
 }
