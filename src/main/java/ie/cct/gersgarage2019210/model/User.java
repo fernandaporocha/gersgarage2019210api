@@ -32,8 +32,4 @@ public class User {
 	private boolean isAdmin;
 	private boolean isActive;
 	private String password;
-
-
-	
-
 }

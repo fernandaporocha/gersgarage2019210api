@@ -23,5 +23,4 @@ public class VehicleModel {
 	@ManyToOne
 	@JoinColumn(name = "make")
 	private VehicleMake make;
-
 }
