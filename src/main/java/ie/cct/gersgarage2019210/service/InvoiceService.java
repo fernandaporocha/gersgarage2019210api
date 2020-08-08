@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -21,6 +23,7 @@ import ie.cct.gersgarage2019210.model.Booking;
 import ie.cct.gersgarage2019210.model.BookingItem;
 import ie.cct.gersgarage2019210.model.ServiceType;
 
+@Service
 public class InvoiceService {
 	private static String FILE = "c:/temp/FirstPdf.pdf";
 	Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
@@ -33,7 +36,7 @@ public class InvoiceService {
 	BigDecimal totalService = new BigDecimal(0);
 	BigDecimal totalItem = new BigDecimal(0);
 
-	public void generate4(Booking booking, List<BookingItem> items) {
+	public void generateInvoice(Booking booking, List<BookingItem> items) {
 		try {
 			Document document = new Document();
 			PdfWriter.getInstance(document, new FileOutputStream(FILE));
@@ -55,6 +58,7 @@ public class InvoiceService {
 
 	public void addInfoData(Document document, Booking booking) throws DocumentException {
 		Paragraph logo = new Paragraph("Ger's Garage");
+		//https://howtodoinjava.com/java/date-time/localdate-format-example/
 		String formattedDate = booking.getBookingDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
 		Paragraph date = new Paragraph("Booking Date: "+ formattedDate);
 		Paragraph userName = new Paragraph("Customer: "+
@@ -147,6 +151,7 @@ public class InvoiceService {
 
 		}
 		c1 = new PdfPCell(new Phrase("Total", boldFont));
+		//https://kb.itextpdf.com/home/it5kb/examples/colspan-and-rowspan
 		c1.setColspan(2);
 		table.addCell(c1);
 		
