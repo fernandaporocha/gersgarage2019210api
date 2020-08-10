@@ -59,6 +59,16 @@ public class UserService {
 		return user.get();
 	}
 	
+	public Optional<User> findByEmail(String email) {
+		Optional<User> user = (Optional<User>) repository.findByEmail(email);
+		return user;
+	}
+	
+	public Optional<User> findByUsername(String username) {
+		Optional<User> user = (Optional<User>) repository.findByName(username);
+		return user;
+	}
+	
 	public void update(UserDTO dto) {
 		contactDetailsService.update(dto.getContactDetails());
 		User user = find(dto.getId());

@@ -15,6 +15,10 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 	
 	Optional<User>findByNameAndPassword(String name, String password);
 	
+	Optional<User>findByName(String name);
+	
+	Optional<User>findByEmail(String email);
+	
 	List<User>findByIsStaffAndIsAdminAndIsActive(boolean isStaff, boolean isAdmin, boolean isActive);
 
 }
