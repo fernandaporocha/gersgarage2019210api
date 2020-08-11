@@ -33,14 +33,20 @@ public class VehicleMakeController {
 	@GetMapping("/{id}")
 	public VehicleMakeDTO find(@PathVariable Integer id) {
 		VehicleMake vehicleMake = service.find(id);
-		return vehicleMake==null?null:new VehicleMakeDTO(vehicleMake.getId(), vehicleMake.getName());
+		return vehicleMake==null?null:new VehicleMakeDTO(vehicleMake.getId(), 
+				vehicleMake.getName(), 
+				vehicleMake.getType().getId(), 
+				vehicleMake.getType().getName());
 	}
 	
 	@GetMapping("")
 	public List<VehicleMakeDTO> getAll() {
 		List<VehicleMake> list = service.findAll();
 		List<VehicleMakeDTO> dtos = new ArrayList<VehicleMakeDTO>();
-		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(), vehicleMake.getName())));
+		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(), 
+				vehicleMake.getName(), 
+				vehicleMake.getType().getId(), 
+				vehicleMake.getType().getName())));
 		return dtos;
 	}
 	

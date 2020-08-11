@@ -15,10 +15,13 @@ import ie.cct.gersgarage2019210.repository.VehicleMakeRepository;
 public class VehicleMakeService {
 	@Autowired
 	private VehicleMakeRepository repository;
-	@Autowired VehicleModelService vehicleModelService;
+	@Autowired 
+	VehicleModelService vehicleModelService;
+	@Autowired
+	VehicleTypeService vehicleTypeService;
 	
 	public void create(VehicleMakeDTO dto) {
-		VehicleMake vehicleMake = new VehicleMake(null, dto.getName());
+		VehicleMake vehicleMake = new VehicleMake(null, dto.getName(), vehicleTypeService.find(dto.getVehicleTypeId()));
 		VehicleMake savedMake = repository.save(vehicleMake);
 		vehicleModelService.create(new VehicleModelDTO(null, "Other", savedMake.getId(), savedMake.getName()));
 	}

@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class VehicleMakeDTO {
 	private Integer id;
 	private String name;
+	private Integer vehicleTypeId;
+	private String vehicleTypeName;
 }
