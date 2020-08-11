@@ -38,6 +38,7 @@ public class VehicleMakeService {
 	public void update(VehicleMakeDTO dto) {
 		VehicleMake vehicleMake = find(dto.getId());
 		vehicleMake.setName(dto.getName());
+		vehicleMake.setType(vehicleTypeService.find(dto.getVehicleTypeId()));
 		repository.save(vehicleMake);
 	}
 	
