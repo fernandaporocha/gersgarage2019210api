@@ -67,7 +67,8 @@ public class UserController {
 				user.getFirstName(), 
 				user.getLastName(), 
 				user.getEmail(), 
-				user.getContactDetails().getId(),new ContactDetailsDTO( user.getContactDetails().getId(),
+				user.getContactDetails()==null?null:
+					user.getContactDetails().getId(),new ContactDetailsDTO( user.getContactDetails().getId(),
 						user.getContactDetails().getAddress(),
 						user.getContactDetails().getAddressExtraInformation(),
 						user.getContactDetails().getPhone(),
@@ -90,7 +91,7 @@ public class UserController {
 						user.getFirstName(), 
 						user.getLastName(), 
 						user.getEmail(), 
-						user.getContactDetails().getId(),
+						user.getContactDetails()==null?null:user.getContactDetails().getId(),
 						new ContactDetailsDTO(user.getContactDetails().getId(),
 								user.getContactDetails().getAddress(),
 								user.getContactDetails().getAddressExtraInformation(),
@@ -123,12 +124,14 @@ public class UserController {
 				user.getFirstName(), 
 				user.getLastName(), 
 				user.getEmail(), 
-				user.getContactDetails().getId(), 
-				new ContactDetailsDTO(user.getContactDetails().getId(),
-						user.getContactDetails().getAddress(),
-						user.getContactDetails().getAddressExtraInformation(),
-						user.getContactDetails().getPhone(),
-						user.getContactDetails().getMobilePhone()), 
+				user.getContactDetails()==null?null:
+					user.getContactDetails().getId(),
+				user.getContactDetails()==null?null:
+					new ContactDetailsDTO(user.getContactDetails().getId(),
+							user.getContactDetails().getAddress(),
+							user.getContactDetails().getAddressExtraInformation(),
+							user.getContactDetails().getPhone(),
+							user.getContactDetails().getMobilePhone()), 
 				user.isStaff(), 
 				user.isAdmin(), 
 				user.isActive(),
@@ -143,6 +146,7 @@ public class UserController {
         if (service.findByUsername(dto.getUsername()).isPresent()) {
         	System.out.println("checkinput");
             bindingResult.rejectValue("username", "DUPLICATED", "Duplicated username");
+            bindingResult.rejectValue("password", "DUPLICATED", "Duplicated password");
         }
 
 /*        if (service.findByEmail(dto.getEmail()).isPresent()) {
