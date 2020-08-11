@@ -58,7 +58,7 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
     	Optional<User> user = userRepository.findByName("admin");
     	System.out.println(user);
-    	if(user.isEmpty()) {
+    	if(!user.isPresent()) {
     		generateData();
     	}
     }
