@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class ItemDTO {
 	private Integer id;
 	private String name;
-	private Integer quantity;
 	private BigDecimal price;
 
 }

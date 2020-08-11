@@ -16,7 +16,7 @@ public class ItemService {
 	private ItemRepository repository;
 	
 	public void create(ItemDTO dto) {
-		Item item = new Item(null, dto.getName(),dto.getQuantity(), dto.getPrice());
+		Item item = new Item(null, dto.getName(), dto.getPrice());
 		repository.save(item);
 	}
 	
@@ -37,7 +37,6 @@ public class ItemService {
 		Item item = find(dto.getId());
 		item.setName(dto.getName());
 		item.setPrice(dto.getPrice());
-		item.setQuantity(dto.getQuantity());
 		repository.save(item);
 	}
 	

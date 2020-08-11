@@ -20,7 +20,6 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Integer quantity;
 	private BigDecimal price;
 
 }

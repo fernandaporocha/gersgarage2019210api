@@ -135,7 +135,7 @@ public class InvoiceService {
 		for (BookingItem item : items) {
 			table.addCell(item.getItem().getName());
 			
-			c1 = new PdfPCell(new Phrase(item.getItem().getQuantity().toString()));
+			c1 = new PdfPCell(new Phrase(item.getQuantity().toString()));
 			c1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			table.addCell(c1);
 
@@ -143,7 +143,7 @@ public class InvoiceService {
 			c1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			table.addCell(c1);
 
-			BigDecimal total = item.getItem().getPrice().multiply(new BigDecimal(item.getItem().getQuantity()));
+			BigDecimal total = item.getItem().getPrice().multiply(new BigDecimal(item.getQuantity()));
 			c1 = new PdfPCell(new Phrase("€ " + total));
 			c1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			table.addCell(c1);

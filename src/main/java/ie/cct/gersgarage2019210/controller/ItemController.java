@@ -33,14 +33,14 @@ public class ItemController {
 	@GetMapping("/{id}")
 	public ItemDTO find(@PathVariable Integer id) {
 		Item item = service.find(id);
-		return item==null?null:new ItemDTO(item.getId(), item.getName(), item.getQuantity(), item.getPrice());
+		return item==null?null:new ItemDTO(item.getId(), item.getName(), item.getPrice());
 	}
 	
 	@GetMapping("")
 	public List<ItemDTO> getAll() {
 		List<Item> list = service.findAll();
 		List<ItemDTO> dtos = new ArrayList<ItemDTO>();
-		list.forEach(item -> dtos.add(new ItemDTO(item.getId(), item.getName(), item.getQuantity(), item.getPrice())));
+		list.forEach(item -> dtos.add(new ItemDTO(item.getId(), item.getName(), item.getPrice())));
 		return dtos;
 	}
 	
