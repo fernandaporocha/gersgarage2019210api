@@ -87,5 +87,26 @@ public class BookingController {
 	public void delete(@PathVariable Integer id) {
 		service.delete(id);
 	}
-
+		
+	@PostMapping("/search")
+	public List<BookingDTO> search(@RequestBody SearchByDateDTO dto) {
+		List<Booking> list = service.findByDateRange(dto.getMinDate(), dto.getMaxDate());
+		List<BookingDTO> dtos = new ArrayList<BookingDTO>();
+		list.forEach(booking -> dtos.add(new BookingDTO(booking.getId(), 
+				booking.getCustomer()==null?null:booking.getCustomer().getId(), 
+				booking.getResponsibleStaff()==null?null:booking.getResponsibleStaff().getId(), 
+				booking.getVehicle().getId(), 
+				booking.getRequiredBooking().getId(), 
+				booking.getStatus()==null?null:booking.getStatus().getId(), 
+				booking.getServiceIds(), 
+				booking.getBookingDate(),
+				booking.getBookingDate()==null?null:service.localDateToString(booking.getBookingDate()),
+				booking.getCustomer()==null?null:booking.getCustomer().getFirstName()+ " " + booking.getCustomer().getLastName(),
+				booking.getRequiredBooking().getName(),
+				booking.getResponsibleStaff()==null?null:booking.getResponsibleStaff().getFirstName() + " " + booking.getResponsibleStaff().getLastName(),
+				booking.getStatus()==null?null:booking.getStatus().getName(),
+				booking.getComments(),
+				bookingItemsService.parseBookingItemDTO(service.getBookingItems(booking.getId())))));
+		return dtos;
+	}
 }

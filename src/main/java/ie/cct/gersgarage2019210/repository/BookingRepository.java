@@ -14,4 +14,7 @@ public interface BookingRepository extends CrudRepository<Booking, Integer>{
 	List<Booking> findByCustomer(Integer customerId);
 	
 	List<Booking> findByBookingDate(LocalDate date);
+	
+	//https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
+	List<Booking> findByBookingDateBetween (LocalDate minDate, LocalDate maxDate);
 }

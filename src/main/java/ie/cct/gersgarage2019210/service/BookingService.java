@@ -60,13 +60,20 @@ public class BookingService {
 		bookingItemsService.save(dto.getBookingItems(), savedBooking);
 	}
 	
-	public List<Booking> findAll() throws DocumentException, FileNotFoundException{
+	public List<Booking> findAll(){
 		return (List<Booking>) repository.findAll();
+	}
+	
+	public List<Booking> findByDateRange(LocalDate minDate, LocalDate maxDate){
+		minDate=minDate.plusDays(1);
+		maxDate=maxDate.plusDays(1);
+		
+		return repository.findByBookingDateBetween(minDate, maxDate);	
 	}
 	
 	public Booking find(Integer id) {
 		Optional<Booking> booking = (Optional<Booking>) repository.findById(id);
-		return booking.get();
+		return booking.isPresent()?booking.get():null;
 	}
 	
 	public void update(BookingDTO dto) {
