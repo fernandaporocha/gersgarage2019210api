@@ -29,6 +29,11 @@ public class BookingStatusService {
 		return bookingStatus.get();
 	}
 	
+	public BookingStatus findByName(String statusName) {
+		Optional<BookingStatus> bookingStatus = (Optional<BookingStatus>) repository.findByName(statusName);
+		return bookingStatus.get();
+	}
+	
 	public void update(BookingStatusDTO dto) {
 		BookingStatus bookingStatus = find(dto.getId());
 		bookingStatus.setName(dto.getName());

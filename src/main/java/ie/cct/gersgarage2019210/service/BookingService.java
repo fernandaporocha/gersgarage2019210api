@@ -51,7 +51,7 @@ public class BookingService {
 				dto.getStaffId()==null?null:userService.find(dto.getStaffId()), 
 				vehicleService.find(dto.getVehicleId()), 
 				bookingType, 
-				dto.getStatusId()==null?null:bookingStatusService.find(dto.getStatusId()), 
+				dto.getStatusId()==null?bookingStatusService.findByName("Booked"):bookingStatusService.find(dto.getStatusId()), 
 				serviceIds==null?null:serviceTypeService.findAllById(serviceIds), 
 				dto.getBookingDate(),
 				bookingType.isDoubledSlot()?2:1,
