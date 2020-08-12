@@ -19,11 +19,13 @@ public class BookingDTO {
 	private Integer statusId;
 	private Integer[] serviceIds;
 	private LocalDate bookingDate;
+	private String bsDate;
 	private String customerName;
 	private String serviceName;
 	private String staffName;
 	private String status;
 	private String comments;
 	private List<BookingItemDTO> bookingItems;
+	private boolean invoice;
 	
 }
