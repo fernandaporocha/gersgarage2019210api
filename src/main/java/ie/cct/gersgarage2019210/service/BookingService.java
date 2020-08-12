@@ -1,17 +1,20 @@
 package ie.cct.gersgarage2019210.service;
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpServletResponse;
 
-import com.itextpdf.text.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
 
 import ie.cct.gersgarage2019210.dto.BookingDTO;
 import ie.cct.gersgarage2019210.model.Booking;
@@ -137,4 +140,16 @@ public class BookingService {
 		return total;
 	}
 	
+	public Resource getResource(HttpServletResponse response) {
+		System.out.println("Get Resource");
+		response.setContentType("application/pdf; charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment; filename=FirstPdf.pdf");
+		response.setHeader("filename", "FirstPdf.pdf");
+		System.out.println(response);
+		System.out.println("Going to read");
+		Resource resource = new FileSystemResource("C:\\temp\\FirstPdf.pdf");
+		System.out.println("depois do resource");
+		System.out.println(resource);
+		return resource;
+	}
 }

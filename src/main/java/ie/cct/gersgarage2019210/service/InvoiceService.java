@@ -62,8 +62,8 @@ public class InvoiceService {
 		String formattedDate = booking.getBookingDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
 		Paragraph date = new Paragraph("Booking Date: "+ formattedDate);
 		Paragraph userName = new Paragraph("Customer: "+
-				booking.getCustomer().getFirstName() + " " + booking.getCustomer().getLastName());
-		Paragraph mobile = new Paragraph("Mob No:   " + booking.getCustomer().getContactDetails().getMobilePhone());
+				(booking.getCustomer()==null?"":(booking.getCustomer().getFirstName() + " " + booking.getCustomer().getLastName())));
+		Paragraph mobile = new Paragraph("Mob No:   " + (booking.getCustomer()==null?"":(booking.getCustomer().getContactDetails()==null?"":booking.getCustomer().getContactDetails().getMobilePhone())));
 		document.add(logo);
 		document.add(date);
 		document.add(userName);
