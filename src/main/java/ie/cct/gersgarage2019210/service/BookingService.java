@@ -140,6 +140,12 @@ public class BookingService {
 		return total;
 	}
 	
+	public String localDateToString(LocalDate date) {
+		String formattedDate = date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)).replace('/', '-');
+		System.out.println("SHORT format: " + formattedDate);
+		return formattedDate;
+	}
+	
 	public Resource getResource(HttpServletResponse response) {
 		System.out.println("Get Resource");
 		response.setContentType("application/pdf; charset=utf-8");
