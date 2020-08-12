@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ie.cct.gersgarage2019210.dto.VehicleMakeDTO;
+import ie.cct.gersgarage2019210.dto.VehicleModelDTO;
 import ie.cct.gersgarage2019210.model.VehicleMake;
+import ie.cct.gersgarage2019210.model.VehicleModel;
 import ie.cct.gersgarage2019210.service.VehicleMakeService;
 
 @CrossOrigin("*")
@@ -50,8 +52,21 @@ public class VehicleMakeController {
 		return dtos;
 	}
 	
+	@GetMapping("/vehicleType/{typeId}")
+	public List<VehicleMakeDTO> getMakesByTypeId(@PathVariable Integer typeId) {
+		List<VehicleMake> list = service.findByTypeId(typeId);
+		System.out.println(list);
+		List<VehicleMakeDTO> dtos = new ArrayList<VehicleMakeDTO>();
+		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(), 
+				vehicleMake.getName(), 
+				vehicleMake.getType().getId(), 
+				vehicleMake.getType().getName())));
+		return dtos;
+	}
+	
 	@PutMapping
 	public void update(@RequestBody VehicleMakeDTO dto) {
+		System.out.println("update " +dto);
 		service.update(dto);
 	}
 	

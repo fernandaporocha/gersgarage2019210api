@@ -30,6 +30,10 @@ public class VehicleMakeService {
 		return (List<VehicleMake>) repository.findAll();
 	}
 	
+	public List<VehicleMake> findByTypeId(Integer id){
+		return (List<VehicleMake>) repository.findByTypeId(id);
+	}
+	
 	public VehicleMake find(Integer id) {
 		Optional<VehicleMake> vehicleMake = (Optional<VehicleMake>) repository.findById(id);
 		return vehicleMake.get();
