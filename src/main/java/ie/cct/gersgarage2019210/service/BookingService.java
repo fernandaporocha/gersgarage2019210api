@@ -145,17 +145,12 @@ public class BookingService {
 		System.out.println("SHORT format: " + formattedDate);
 		return formattedDate;
 	}
-	
+		
 	public Resource getResource(HttpServletResponse response) {
-		System.out.println("Get Resource");
 		response.setContentType("application/pdf; charset=utf-8");
-		response.setHeader("Content-Disposition", "attachment; filename=FirstPdf.pdf");
-		response.setHeader("filename", "FirstPdf.pdf");
-		System.out.println(response);
-		System.out.println("Going to read");
-		Resource resource = new FileSystemResource("C:\\temp\\FirstPdf.pdf");
-		System.out.println("depois do resource");
-		System.out.println(resource);
+		response.setHeader("Content-Disposition", "attachment; filename=invoice.pdf");
+		response.setHeader("filename", "invoice.pdf");
+		Resource resource = new FileSystemResource("C:\\temp\\invoice.pdf");
 		return resource;
 	}
 }
