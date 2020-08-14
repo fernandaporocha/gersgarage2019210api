@@ -124,10 +124,9 @@ public class BookingController {
 	}
 	
 	//http://roufid.com/angular-download-file-spring-boot/
-	@GetMapping(value = "/invoice/{bookingId}", produces = "text/pdf; charset=utf-8")
+	@GetMapping(value = "/invoice/{bookingId}", produces = MediaType.APPLICATION_PDF_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public Resource generateInvoice(@PathVariable Integer bookingId, HttpServletResponse response) {
-		System.out.println("invoice");
 		Booking booking = service.find(bookingId);
 		List<BookingItem> items = service.getBookingItems(bookingId);
 		invoiceService.generateInvoice(booking, items);
