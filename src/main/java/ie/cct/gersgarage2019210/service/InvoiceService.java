@@ -33,23 +33,23 @@ public class InvoiceService {
 	
 
 	Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-	BigDecimal totalService = new BigDecimal(0);
-	BigDecimal totalItem = new BigDecimal(0);
+	
 
 	public void generateInvoice(Booking booking, List<BookingItem> items) {
 		try {
 			Document document = new Document();
+			BigDecimal totalItem = new BigDecimal(0);
 			PdfWriter.getInstance(document, new FileOutputStream(FILE));
 			document.open();
 			addInfoData(document, booking);
 			document.add(new Paragraph(" "));
-			addServiceTable(document, booking);
+			BigDecimal totalService = addServiceTable(document, booking);
 			document.add(new Paragraph(" "));
 			document.add(new Paragraph(" "));
 			addItemsTable(document, booking, items);
 			document.add(new Paragraph(" "));
 			document.add(new Paragraph(" "));
-			addTotalInvoice(document);
+			addTotalInvoice(document, totalItem.add(totalService));
 			document.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,9 +76,10 @@ public class InvoiceService {
 
 	}
 
-	private void addServiceTable(Document document, Booking booking) throws DocumentException {
+	private BigDecimal addServiceTable(Document document, Booking booking) throws DocumentException {
 		PdfPTable table = new PdfPTable(2);
-
+		BigDecimal totalService = new BigDecimal(0);
+		
 		PdfPCell c1 = new PdfPCell(new Phrase("Services", boldFont));
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 		table.addCell(c1);
@@ -107,10 +108,12 @@ public class InvoiceService {
 		table.addCell(c1);
 
 		document.add(table);
+		return totalService;
 	}
 
-	private void addItemsTable(Document document, Booking booking, List<BookingItem> items) throws DocumentException {
+	private BigDecimal addItemsTable(Document document, Booking booking, List<BookingItem> items) throws DocumentException {
 		PdfPTable table = new PdfPTable(4);
+		BigDecimal totalItem = new BigDecimal(0);
 
 		Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
 		PdfPCell c1 = new PdfPCell(new Phrase("Items", boldFont));
@@ -161,11 +164,11 @@ public class InvoiceService {
 		table.addCell(c1);
 
 		document.add(table);
+		return totalItem;
 	}
 	
-	private void addTotalInvoice(Document document) throws DocumentException {
+	private void addTotalInvoice(Document document, BigDecimal totalInvoice) throws DocumentException {
 		PdfPTable table = new PdfPTable(2);
-		BigDecimal totalInvoice = totalItem.add(totalService);
 
 		PdfPCell c1 = new PdfPCell(new Phrase("Total Due", boldFont));
 		c1.setHorizontalAlignment(Element.ALIGN_CENTER);
