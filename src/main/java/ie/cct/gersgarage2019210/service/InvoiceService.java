@@ -25,7 +25,7 @@ import ie.cct.gersgarage2019210.model.ServiceType;
 
 @Service
 public class InvoiceService {
-	private static String FILE = "c:/temp/FirstPdf.pdf";
+	private static String FILE = "c:/temp/invoice.pdf";
 	Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
 	Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
 	Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
