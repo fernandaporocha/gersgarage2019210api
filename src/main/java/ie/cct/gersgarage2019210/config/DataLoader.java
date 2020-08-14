@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import ie.cct.gersgarage2019210.model.BookingStatus;
 import ie.cct.gersgarage2019210.model.BookingType;
+import ie.cct.gersgarage2019210.model.ContactDetails;
 import ie.cct.gersgarage2019210.model.Item;
 import ie.cct.gersgarage2019210.model.ServiceType;
 import ie.cct.gersgarage2019210.model.User;
@@ -19,6 +20,7 @@ import ie.cct.gersgarage2019210.model.VehicleModel;
 import ie.cct.gersgarage2019210.model.VehicleType;
 import ie.cct.gersgarage2019210.repository.BookingStatusRepository;
 import ie.cct.gersgarage2019210.repository.BookingTypeRepository;
+import ie.cct.gersgarage2019210.repository.ContactDetailsRepository;
 import ie.cct.gersgarage2019210.repository.ItemRepository;
 import ie.cct.gersgarage2019210.repository.ServiceTypeRepository;
 import ie.cct.gersgarage2019210.repository.UserRepository;
@@ -49,15 +51,34 @@ public class DataLoader implements ApplicationRunner {
 	private VehicleModelRepository vehicleModelRepository;
 	@Autowired
 	private BookingTypeRepository bookingTypeRepository;
+	@Autowired
+	private ContactDetailsRepository contactDetailsRepository;
 
 	@Autowired
-	public DataLoader(UserRepository userRepository) {
+	public DataLoader(UserRepository userRepository, 
+			VehicleTypeRepository vehicleTypeRepository,
+			VehicleEngineRepository vehicleEngineRepository,
+			BookingStatusRepository bookingStatusRepository,
+			ItemRepository itemRepository,
+			ServiceTypeRepository serviceTypeRepository,
+			VehicleMakeRepository vehicleMakeRepository,
+			VehicleModelRepository vehicleModelRepository,
+			BookingTypeRepository bookingTypeRepository,
+			ContactDetailsRepository contactDetailsRepository) {
 		this.userRepository = userRepository;
+		this.vehicleTypeRepository = vehicleTypeRepository;
+		this.vehicleEngineRepository = vehicleEngineRepository;
+		this.bookingStatusRepository = bookingStatusRepository;
+		this.itemRepository = itemRepository;
+		this.serviceTypeRepository = serviceTypeRepository;
+		this.vehicleMakeRepository = vehicleMakeRepository;
+		this.vehicleModelRepository = vehicleModelRepository;
+		this.bookingTypeRepository = bookingTypeRepository;
+		this.contactDetailsRepository = contactDetailsRepository;
 	}
 
 	public void run(ApplicationArguments args) {
 		Optional<User> user = userRepository.findByName("admin");
-		System.out.println(user);
 		if (!user.isPresent()) {
 			generateData();
 		}
@@ -72,6 +93,55 @@ public class DataLoader implements ApplicationRunner {
 		generateItems();
 		generateServices();
 		generateVehicleMakesAndModels();
+	}
+	
+	private void generateVehicleEngine() {
+		VehicleEngine engine = new VehicleEngine(null, "Diesel");
+		vehicleEngineRepository.save(engine);
+		engine = new VehicleEngine(null, "Petrol");
+		vehicleEngineRepository.save(engine);
+		engine = new VehicleEngine(null, "Hybrid");
+		vehicleEngineRepository.save(engine);
+		engine = new VehicleEngine(null, "Eletric");
+		vehicleEngineRepository.save(engine);
+	}
+
+	private void generateVehicleType() {
+		VehicleType type = new VehicleType(null, "Car");
+		vehicleTypeRepository.save(type);
+		type = new VehicleType(null, "Motorbike");
+		vehicleTypeRepository.save(type);
+		type = new VehicleType(null, "Van");
+		vehicleTypeRepository.save(type);
+		type = new VehicleType(null, "Bus");
+		vehicleTypeRepository.save(type);
+	}
+	
+	private void generateServices() {
+		ServiceType service = new ServiceType(null, "Computer Diagnostics", new BigDecimal(50));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Lube/oil/filter change", new BigDecimal(20));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Radiator Flush", new BigDecimal(35));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Transmission Fluid", new BigDecimal(25));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "A/C Recharge & Diagnostic", new BigDecimal(60));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Timing Belt Replacement", new BigDecimal(50));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Tire rotation and balance", new BigDecimal(60));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Battery replacement", new BigDecimal(50));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Anti-Lock system diagnosis", new BigDecimal(80));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Suspension system", new BigDecimal(200));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Alignments", new BigDecimal(60));
+		serviceTypeRepository.save(service);
+		service = new ServiceType(null, "Shock and Strut Replacement", new BigDecimal(50));
+		serviceTypeRepository.save(service);
 	}
 
 	private void generateVehicleMakesAndModels() {
@@ -241,33 +311,6 @@ public class DataLoader implements ApplicationRunner {
 		vehicleModelRepository.save(model);
 	}
 
-	private void generateServices() {
-		ServiceType service = new ServiceType(null, "Computer Diagnostics", new BigDecimal(50));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Lube/oil/filter change", new BigDecimal(20));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Radiator Flush", new BigDecimal(35));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Transmission Fluid", new BigDecimal(25));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "A/C Recharge & Diagnostic", new BigDecimal(60));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Timing Belt Replacement", new BigDecimal(50));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Tire rotation and balance", new BigDecimal(60));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Battery replacement", new BigDecimal(50));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Anti-Lock system diagnosis", new BigDecimal(80));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Suspension system", new BigDecimal(200));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Alignments", new BigDecimal(60));
-		serviceTypeRepository.save(service);
-		service = new ServiceType(null, "Shock and Strut Replacement", new BigDecimal(50));
-		serviceTypeRepository.save(service);
-	}
-
 	private void generateItems() {
 		// https://www.mister-auto.ie/car-parts/
 		Item item = new Item(null, "Front Brake Pad Set", new BigDecimal(21.5));
@@ -349,28 +392,6 @@ public class DataLoader implements ApplicationRunner {
 		bookingStatusRepository.save(unrepairable);
 	}
 
-	private void generateVehicleEngine() {
-		VehicleEngine diesel = new VehicleEngine(null, "Diesel");
-		vehicleEngineRepository.save(diesel);
-		VehicleEngine petrol = new VehicleEngine(null, "Petrol");
-		vehicleEngineRepository.save(petrol);
-		VehicleEngine hybrid = new VehicleEngine(null, "Hybrid");
-		vehicleEngineRepository.save(hybrid);
-		VehicleEngine eletric = new VehicleEngine(null, "Eletric");
-		vehicleEngineRepository.save(eletric);
-	}
-
-	private void generateVehicleType() {
-		VehicleType car = new VehicleType(null, "Car");
-		vehicleTypeRepository.save(car);
-		VehicleType motorbike = new VehicleType(null, "Motorbike");
-		vehicleTypeRepository.save(motorbike);
-		VehicleType van = new VehicleType(null, "Van");
-		vehicleTypeRepository.save(van);
-		VehicleType bus = new VehicleType(null, "Bus");
-		vehicleTypeRepository.save(bus);
-	}
-
 	private void generateBookingType() {
 		BookingType bookingType = new BookingType(null, "Annual Service", new BigDecimal(200), false);
 		bookingTypeRepository.save(bookingType);
@@ -383,23 +404,29 @@ public class DataLoader implements ApplicationRunner {
 	}
 
 	private void generateUsers() {
-		User adminUser = new User(null, "admin", "admin", "admin", null, null, false, true, true, "admin");
+		ContactDetails contactDetails = generateContactDetails();
+		User adminUser = new User(null, "admin", "admin", "admin", "admin@gersgarage.ie", contactDetails, false, true, true, "admin");
 		userRepository.save(adminUser);
-		User mechanic1 = new User(null, "mechanic1", "Samuel", "Murray", "samuelmurray@gersgarage.ie", null, true,
+		User mechanic1 = new User(null, "mechanic1", "Samuel", "Murray", "samuelmurray@gersgarage.ie", contactDetails, true,
 				false, true, "123");
 		userRepository.save(mechanic1);
-		User mechanic2 = new User(null, "mechanic2", "Joseph", "Smith", "josephsmith@gersgarage.ie", null, true, false,
+		User mechanic2 = new User(null, "mechanic2", "Joseph", "Smith", "josephsmith@gersgarage.ie", contactDetails, true, false,
 				true, "123");
 		userRepository.save(mechanic2);
-		User mechanic3 = new User(null, "mechanic3", "Leonard", "Doyle", "leonarddoyle@gersgarage.ie", null, true,
+		User mechanic3 = new User(null, "mechanic3", "Leonard", "Doyle", "leonarddoyle@gersgarage.ie", contactDetails, true,
 				false, true, "123");
 		userRepository.save(mechanic3);
-		User mechanic4 = new User(null, "mechanic4", "Edward", "Mosbi", "edwardmosbi@gersgarage.ie", null, true, false,
+		User mechanic4 = new User(null, "mechanic4", "Edward", "Mosbi", "edwardmosbi@gersgarage.ie", contactDetails, true, false,
 				true, "123");
 		userRepository.save(mechanic4);
-		User customer = new User(null, "customer", "Scarlet", "Murphy", "scarletmurphy@gersgarage.ie", null, false,
+		User customer = new User(null, "customer", "Scarlet", "Murphy", "scarletmurphy@gersgarage.ie", contactDetails, false,
 				false, true, "123");
 		userRepository.save(customer);
+	}
+	
+	private ContactDetails generateContactDetails() {
+		ContactDetails contactDetails = new ContactDetails(null, "Default address", "Default extra information", "(12)3456-7890", "(98)7654-3210");
+		return contactDetailsRepository.save(contactDetails);		
 	}
 
 }
