@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ie.cct.gersgarage2019210.dto.VehicleMakeDTO;
-import ie.cct.gersgarage2019210.dto.VehicleModelDTO;
 import ie.cct.gersgarage2019210.model.VehicleMake;
-import ie.cct.gersgarage2019210.model.VehicleModel;
 import ie.cct.gersgarage2019210.service.VehicleMakeService;
 
 @CrossOrigin("*")

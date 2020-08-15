@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VehicleDTO {
 	private Integer id;
-	private Integer typeId;
-	private String typeName;
 	private Integer modelId;
 	private String modelName;
+	private Integer makeId;
+	private String makeName;
+	private Integer typeId;
+	private String typeName;
 	private Integer engineId;
 	private String engineName;
 	private String licence;

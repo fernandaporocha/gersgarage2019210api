@@ -29,21 +29,27 @@ public class VehicleController {
 	public void save(@RequestBody VehicleDTO dto) {
 		service.create(dto);
 	}
-	
+		
 	@GetMapping("/{id}")
 	public VehicleDTO find(@PathVariable Integer id) {
 		Vehicle vehicle = service.find(id);
+		if (vehicle==null) {
+			return null;
+		}else {
 		return vehicle==null?null:new VehicleDTO(
-				vehicle.getId(), 
-				vehicle.getType().getId(),
-				vehicle.getType().getName(),
+				vehicle.getId(),
 				vehicle.getModel().getId(),
 				vehicle.getModel().getName(),
+				vehicle.getModel()==null?null:vehicle.getModel().getMake().getId(),
+				vehicle.getModel()==null?null:vehicle.getModel().getMake().getName(),
+				vehicle.getModel()==null||vehicle.getModel().getMake()==null?null:vehicle.getModel().getMake().getType().getId(),		
+				vehicle.getModel()==null||vehicle.getModel().getMake()==null?null:vehicle.getModel().getMake().getType().getName(),
 				vehicle.getEngine().getId(),
 				vehicle.getEngine().getName(),
 				vehicle.getLicence(), 
 				vehicle.getYear(),
 				vehicle.getCustomer()==null?null:vehicle.getCustomer().getId());
+		}
 	}
 	
 	@GetMapping("")
@@ -52,10 +58,12 @@ public class VehicleController {
 		List<VehicleDTO> dtos = new ArrayList<VehicleDTO>();
 		list.forEach(vehicle -> dtos.add(new VehicleDTO(
 				vehicle.getId(), 
-				vehicle.getType().getId(), 
-				vehicle.getType().getName(),
 				vehicle.getModel().getId(),
 				vehicle.getModel().getName(),
+				vehicle.getModel()==null?null:vehicle.getModel().getMake().getId(),
+				vehicle.getModel()==null?null:vehicle.getModel().getMake().getName(),
+				vehicle.getModel()==null||vehicle.getModel().getMake()==null?null:vehicle.getModel().getMake().getType().getId(),		
+				vehicle.getModel()==null||vehicle.getModel().getMake()==null?null:vehicle.getModel().getMake().getType().getName(),
 				vehicle.getEngine().getId(),
 				vehicle.getEngine().getName(), 
 				vehicle.getLicence(), vehicle.getYear(),
