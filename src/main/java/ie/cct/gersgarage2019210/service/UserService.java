@@ -5,9 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import ie.cct.gersgarage2019210.dto.ContactDetailsDTO;
+import ie.cct.gersgarage2019210.dto.LoginDTO;
 import ie.cct.gersgarage2019210.dto.UserDTO;
+import ie.cct.gersgarage2019210.exceptions.InvalidRequestException;
 import ie.cct.gersgarage2019210.model.ContactDetails;
 import ie.cct.gersgarage2019210.model.User;
 import ie.cct.gersgarage2019210.repository.UserRepository;
@@ -101,4 +105,19 @@ public class UserService {
 		Optional<User> user = (Optional<User>) repository.findByNameAndPassword(username, password);
 		return user.isPresent()?user.get():null;
 	}
+	
+	private void checkInput(@RequestBody LoginDTO dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InvalidRequestException(bindingResult);
+        }
+        if (findByUsername(dto.getUsername()).isPresent()) {
+        	System.out.println("checkinput");
+            bindingResult.rejectValue("username", "DUPLICATED", "Duplicated username");
+        }
+
+        if (bindingResult.hasErrors()) {
+        	System.out.println(bindingResult);
+            throw new InvalidRequestException(bindingResult);
+        }
+    }
 }
