@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ie.cct.gersgarage2019210.dto.ServiceTypeDTO;
-import ie.cct.gersgarage2019210.model.Item;
 import ie.cct.gersgarage2019210.model.ServiceType;
 import ie.cct.gersgarage2019210.repository.ServiceTypeRepository;
 
