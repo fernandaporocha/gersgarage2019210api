@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -26,19 +25,11 @@ import ie.cct.gersgarage2019210.model.ServiceType;
 @Service
 public class InvoiceService {
 	private static String FILE = "c:/temp/invoice.pdf";
-	Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
-	Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
-	Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-	Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
-	
-
 	Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
-	
 
 	public void generateInvoice(Booking booking, List<BookingItem> items) {
 		try {
 			Document document = new Document();
-			BigDecimal totalItem = new BigDecimal(0);
 			PdfWriter.getInstance(document, new FileOutputStream(FILE));
 			document.open();
 			addInfoData(document, booking);
@@ -46,9 +37,11 @@ public class InvoiceService {
 			BigDecimal totalService = addServiceTable(document, booking);
 			document.add(new Paragraph(" "));
 			document.add(new Paragraph(" "));
-			addItemsTable(document, booking, items);
+			BigDecimal totalItem=addItemsTable(document, booking, items);
 			document.add(new Paragraph(" "));
 			document.add(new Paragraph(" "));
+			System.out.println(totalItem);
+			System.out.println(totalService);
 			addTotalInvoice(document, totalItem.add(totalService));
 			document.close();
 		} catch (Exception e) {
@@ -59,7 +52,7 @@ public class InvoiceService {
 	public void addInfoData(Document document, Booking booking) throws DocumentException {
 		Paragraph logo = new Paragraph("Ger's Garage");
 		//https://howtodoinjava.com/java/date-time/localdate-format-example/
-		String formattedDate = booking.getBookingDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+		String formattedDate = booking.getDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
 		Paragraph date = new Paragraph("Booking Date: "+ formattedDate);
 		Paragraph userName = new Paragraph("Customer: "+
 				(booking.getCustomer()==null?"":(booking.getCustomer().getFirstName() + " " + booking.getCustomer().getLastName())));
@@ -168,6 +161,7 @@ public class InvoiceService {
 	}
 	
 	private void addTotalInvoice(Document document, BigDecimal totalInvoice) throws DocumentException {
+		System.out.println(totalInvoice);
 		PdfPTable table = new PdfPTable(2);
 
 		PdfPCell c1 = new PdfPCell(new Phrase("Total Due", boldFont));
