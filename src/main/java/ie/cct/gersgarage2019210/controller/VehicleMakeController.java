@@ -22,8 +22,7 @@ import ie.cct.gersgarage2019210.service.VehicleMakeService;
 @RestController
 @RequestMapping(path="/vehicleMake")
 public class VehicleMakeController {
-	@Autowired
-	private VehicleMakeService service;
+	@Autowired private VehicleMakeService service;
 	
 	@PostMapping
 	public void save(@RequestBody VehicleMakeDTO dto) {
@@ -33,20 +32,14 @@ public class VehicleMakeController {
 	@GetMapping("/{id}")
 	public VehicleMakeDTO find(@PathVariable Integer id) {
 		VehicleMake vehicleMake = service.find(id);
-		return vehicleMake==null?null:new VehicleMakeDTO(vehicleMake.getId(), 
-				vehicleMake.getName(), 
-				vehicleMake.getType().getId(), 
-				vehicleMake.getType().getName());
+		return vehicleMake==null?null:new VehicleMakeDTO(vehicleMake.getId(), vehicleMake.getName(),vehicleMake.getType().getId(), vehicleMake.getType().getName());
 	}
 	
 	@GetMapping("")
 	public List<VehicleMakeDTO> getAll() {
 		List<VehicleMake> list = service.findAll();
 		List<VehicleMakeDTO> dtos = new ArrayList<VehicleMakeDTO>();
-		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(), 
-				vehicleMake.getName(), 
-				vehicleMake.getType().getId(), 
-				vehicleMake.getType().getName())));
+		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(), vehicleMake.getName(), vehicleMake.getType().getId(), vehicleMake.getType().getName())));
 		return dtos;
 	}
 	
@@ -55,16 +48,12 @@ public class VehicleMakeController {
 		List<VehicleMake> list = service.findByTypeId(typeId);
 		System.out.println(list);
 		List<VehicleMakeDTO> dtos = new ArrayList<VehicleMakeDTO>();
-		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(), 
-				vehicleMake.getName(), 
-				vehicleMake.getType().getId(), 
-				vehicleMake.getType().getName())));
+		list.forEach(vehicleMake -> dtos.add(new VehicleMakeDTO(vehicleMake.getId(),vehicleMake.getName(), vehicleMake.getType().getId(), vehicleMake.getType().getName())));
 		return dtos;
 	}
 	
 	@PutMapping
 	public void update(@RequestBody VehicleMakeDTO dto) {
-		System.out.println("update " +dto);
 		service.update(dto);
 	}
 	
@@ -72,6 +61,5 @@ public class VehicleMakeController {
 	public void delete(@PathVariable Integer id) {
 		service.delete(id);
 	}
-
 }
 

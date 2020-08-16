@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -43,11 +42,11 @@ public class Booking {
 	@ManyToMany
 	@JoinTable(
 	  name = "booking_services", 
-	  joinColumns = {@JoinColumn(name = "booking_id")}, 
-	  inverseJoinColumns = {@JoinColumn(name = "service_id")}
+	  joinColumns = {@JoinColumn(name = "booking")}, 
+	  inverseJoinColumns = {@JoinColumn(name = "service")}
 	)
 	List<ServiceType> requiredServices;
-	private LocalDate bookingDate;
+	private LocalDate date;
 	private Integer requiredSlots;
 	private String comments;
 	

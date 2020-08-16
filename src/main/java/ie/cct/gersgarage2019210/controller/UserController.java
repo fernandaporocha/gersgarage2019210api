@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ie.cct.gersgarage2019210.dto.ContactDetailsDTO;
 import ie.cct.gersgarage2019210.dto.LoginDTO;
 import ie.cct.gersgarage2019210.dto.UserDTO;
-import ie.cct.gersgarage2019210.exceptions.InvalidRequestException;
 import ie.cct.gersgarage2019210.model.User;
 import ie.cct.gersgarage2019210.service.UserService;
 
@@ -33,6 +30,7 @@ public class UserController {
 	
 	@PostMapping
 	public void save(@RequestBody UserDTO dto) {
+		System.out.println(dto);
 		service.create(dto, dto.getContactDetails());
 	}
 	
@@ -45,12 +43,13 @@ public class UserController {
 				user.getFirstName(), 
 				user.getLastName(), 
 				user.getEmail(), 
-				user.getContactDetails().getId(), 
-				new ContactDetailsDTO( user.getContactDetails().getId(),
-					user.getContactDetails().getAddress(),
-					user.getContactDetails().getAddressExtraInformation(),
-					user.getContactDetails().getPhone(),
-					user.getContactDetails().getMobilePhone()), 
+				user.getContactDetails()==null?null:user.getContactDetails().getId(),
+						user.getContactDetails()==null?null:
+							new ContactDetailsDTO( user.getContactDetails().getId(),
+								user.getContactDetails().getAddress(),
+								user.getContactDetails().getAddressExtraInformation(),
+								user.getContactDetails().getPhone(),
+								user.getContactDetails().getMobilePhone()),
 				user.isStaff(), 
 				user.isAdmin(), 
 				user.isActive(),
@@ -118,7 +117,7 @@ public class UserController {
 	
 	@PostMapping("login")
 	public UserDTO login(@RequestBody LoginDTO dto,  BindingResult bindingResult) {
-		checkInput(dto, bindingResult);
+		//checkInput(dto, bindingResult);
 		User user = service.login(dto.getUsername(), dto.getPassword());
 		UserDTO userDTO = user==null?null:new UserDTO(
 				user.getId(), 
@@ -141,23 +140,4 @@ public class UserController {
 		return userDTO;
 	}
 	
-	private void checkInput(@RequestBody LoginDTO dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new InvalidRequestException(bindingResult);
-        }
-        if (service.findByUsername(dto.getUsername()).isPresent()) {
-        	System.out.println("checkinput");
-            bindingResult.rejectValue("username", "DUPLICATED", "Duplicated username");
-            bindingResult.rejectValue("password", "DUPLICATED", "Duplicated password");
-        }
-
-/*        if (service.findByEmail(dto.getEmail()).isPresent()) {
-            bindingResult.rejectValue("email", "DUPLICATED", "Duplicated email");
-    }*/    
-
-        if (bindingResult.hasErrors()) {
-        	System.out.println(bindingResult);
-            throw new InvalidRequestException(bindingResult);
-        }
-    }
 }
